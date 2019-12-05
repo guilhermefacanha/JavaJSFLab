@@ -1,0 +1,65 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:p="http://primefaces.org/ui" template="/WEB-INF/template.xhtml">
+
+	<ui:define name="content">
+
+		<f:metadata>
+			<f:viewAction action="#{customerControllerAjax.initList()}" />
+		</f:metadata>
+
+		<h:form id="form-customers">
+			<p:panel>
+				<h1>Customer list with Ajax Paging</h1>
+				<hr />
+				<p:dataTable id="tb_customers" resizableColumns="true" value="#{customerControllerAjax.customersAjax}" var="customer"
+					paginatorAlwaysVisible="false" filterDelay="800" paginator="true" rows="10" emptyMessage="No record found" reflow="true"
+					paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown} {CurrentPageReport} "
+					rowsPerPageTemplate="5,10,20,50" lazy="true" currentPageReportTemplate="{totalRecords} Records found">
+					<f:facet name="header">
+
+					</f:facet>
+					<p:column headerText="Number" sortBy="#{customer.customerNumber}" filterBy="#{customer.customerNumber}" filterMatchMode="contains">
+						<h:outputText value="#{customer.customerNumber}" />
+					</p:column>
+					<p:column headerText="Name" sortBy="#{customer.customerName}" filterBy="#{customer.customerName}" filterMatchMode="contains">
+						<h:outputText value="#{customer.customerName}" />
+					</p:column>
+					<p:column headerText="Country" filterBy="#{customer.country}" filterMatchMode="contains">
+						<h:outputText value="#{customer.country}" />
+					</p:column>
+					<p:column headerText="State" filterBy="#{customer.state}" filterMatchMode="contains">
+						<h:outputText value="#{customer.state}" />
+					</p:column>
+					<p:column headerText="City" filterBy="#{customer.city}" filterMatchMode="contains">
+						<h:outputText value="#{customer.city}" />
+					</p:column>
+					<p:column headerText="Postal Code" filterBy="#{customer.postalCode}" filterMatchMode="contains">
+						<h:outputText value="#{customer.postalCode}" />
+					</p:column>
+					<p:column headerText="Credit Limit">
+						<h:outputText value="#{customer.creditLimit}">
+							<f:convertNumber type="currency" maxFractionDigits="2" minFractionDigits="2" />
+						</h:outputText>
+					</p:column>
+					<p:column headerText="Controls">
+						<p:commandButton styleClass="btn-icon" title="Customer Details" icon="ui-icon-person"
+							actionListener="#{customerControllerAjax.loadCustomer(customer)}" onclick="PF('dlgDetails').show();" update="form-details" />
+						<p:commandButton styleClass="btn-icon" title="Show Orders" icon="ui-icon-cart" actionListener="#{customerControllerAjax.loadCustomer(customer)}"
+							oncomplete="PF('dlgOrder').show();" update="form-orders" />
+						<p:commandButton styleClass="btn-icon" title="Show Products Ordered by Customer" icon="ui-icon-bookmark"
+							actionListener="#{customerControllerAjax.loadCustomerProcuts(customer)}" oncomplete="PF('dlgProducts').show();" update="form-products" />
+					</p:column>
+				</p:dataTable>
+			</p:panel>
+		</h:form>
+
+		<ui:include src="/pages/components/customer_orders_dialog.xhtml" />
+		<ui:include src="/pages/components/customer_detail_dialog.xhtml" />
+		<ui:include src="/pages/components/product_detail_dialog.xhtml" />
+
+		<ui:include src="/pages/components/customer_products_ordered.xhtml" />
+		<ui:include src="/pages/components/order_detail_dialog.xhtml" />
+
+	</ui:define>
+
+</ui:composition>

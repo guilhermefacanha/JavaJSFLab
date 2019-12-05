@@ -1,0 +1,68 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:p="http://primefaces.org/ui">
+
+	<!-- Dialog Customer Details -->
+	<p:dialog fitViewport="true" styleClass="dialog-orders" header="Customer Details" widgetVar="dlgDetails" modal="true" height="100"
+		closeOnEscape="true" closable="true" dynamic="true" resizable="true" responsive="true">
+		<hr />
+		<h:form id="form-details">
+			<div class="ui-g ui-fluid">
+				<div class="ui-g-12 ui-md-8 div-details">
+					<h:outputText styleClass="label" value="Curtomer Number:" />
+					<h:outputText value="#{customerController.selectedCustomer.customerNumber}" />
+				</div>
+				<div class="ui-g-12 ui-md-8 div-details">
+					<h:outputText styleClass="label" value="Customer Name:" />
+					<h:outputText value="#{customerController.selectedCustomer.customerName}" />
+				</div>
+				<div class="ui-g-12 ui-md-8 div-details">
+					<h:outputText styleClass="label" value="Sales Rep Number:" />
+					<h:outputText value="#{customerController.selectedCustomer.salesRepEmployeeNumber}" />
+				</div>
+				<div class="ui-g-12 ui-md-8 div-details">
+					<h:outputText styleClass="label" value="Credit Limit:" />
+					<h:outputText value="#{customerController.selectedCustomer.creditLimit}">
+						<f:convertNumber type="currency" maxFractionDigits="2" minFractionDigits="2" />
+					</h:outputText>
+				</div>
+				<div class="ui-g-12 ui-md-8 div-details">
+					<h:outputText styleClass="label" value="Contact First Name:" />
+					<h:outputText value="#{customerController.selectedCustomer.contactFirstName}" />
+				</div>
+				<div class="ui-g-12 ui-md-8 div-details">
+					<h:outputText styleClass="label" value="Contact Last Name:" />
+					<h:outputText value="#{customerController.selectedCustomer.contactLastName}" />
+				</div>
+				<div class="ui-g-12 ui-md-8 div-details">
+					<h:outputText styleClass="label" value="Phone:" />
+					<h:outputText value="#{customerController.selectedCustomer.phone}" />
+				</div>
+				<div class="ui-g-12 ui-md-8 div-details">
+					<h:outputText styleClass="label" value="Address Line 1:" />
+					<h:outputText value="#{customerController.selectedCustomer.addressLine1}" />
+				</div>
+				<div class="ui-g-12 ui-md-8 div-details">
+					<h:outputText styleClass="label" value="Address Line 2:" />
+					<h:outputText value="#{customerController.selectedCustomer.addressLine2}" />
+				</div>
+				<div class="ui-g-12 ui-md-8 div-details">
+					<h:outputText styleClass="label" value="Country:" />
+					<h:outputText value="#{customerController.selectedCustomer.country}" />
+				</div>
+				<div class="ui-g-12 ui-md-8 div-details">
+					<h:outputText styleClass="label" value="State:" />
+					<h:outputText value="#{customerController.selectedCustomer.state}" />
+				</div>
+				<div class="ui-g-12 ui-md-8 div-details">
+					<h:outputText styleClass="label" value="City:" />
+					<h:outputText value="#{customerController.selectedCustomer.city}" />
+				</div>
+				<div class="ui-g-12 ui-md-8 div-details">
+					<h:outputText styleClass="label" value="Postal Code:" />
+					<h:outputText value="#{customerController.selectedCustomer.postalCode}" />
+				</div>
+			</div>
+		</h:form>
+	</p:dialog>
+
+</ui:composition>

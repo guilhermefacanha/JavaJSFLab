@@ -1,0 +1,56 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:p="http://primefaces.org/ui">
+
+	<!-- Dialog Product Details -->
+	<p:dialog fitViewport="true" styleClass="dialog-product" header="Product Details" widgetVar="dlgProduct" modal="true" height="100"
+		closeOnEscape="true" closable="true" dynamic="true" resizable="true" responsive="true">
+		<hr />
+		<h:panelGroup id="pnl_product">
+			<div class="ui-g ui-fluid">
+				<div class="ui-g-12 ui-md-8 div-details">
+					<h:outputText styleClass="label" value="Product Code:" />
+					<h:outputText value="#{customerController.selectedProduct.productCode}" />
+				</div>
+				<div class="ui-g-12 ui-md-8 div-details">
+					<h:outputText styleClass="label" value="Product Name:" />
+					<h:outputText value="#{customerController.selectedProduct.productName}" />
+				</div>
+				<div class="ui-g-12 ui-md-8 div-details">
+					<h:outputText styleClass="label" value="Product Line:" />
+					<h:outputText value="#{customerController.selectedProduct.productLine}" />
+				</div>
+				<div class="ui-g-12 ui-md-8 div-details">
+					<h:outputText styleClass="label" value="Product Scale:" />
+					<h:outputText value="#{customerController.selectedProduct.productScale}" />
+				</div>
+				<div class="ui-g-12 ui-md-8 div-details">
+					<h:outputText styleClass="label" value="Product Vendor:" />
+					<h:outputText value="#{customerController.selectedProduct.productVendor}" />
+				</div>
+				<div class="ui-g-12 ui-md-8 div-details">
+					<h:outputText styleClass="label" value="Product Quantity in Stock:" />
+					<h:outputText value="#{customerController.selectedProduct.quantityInStock}" />
+				</div>
+				<div class="ui-g-12 ui-md-8 div-details">
+					<h:outputText styleClass="label" value="Product Buy Price:" />
+					<h:outputText value="#{customerController.selectedProduct.buyPrice}">
+						<f:convertNumber type="currency" maxFractionDigits="2" minFractionDigits="2" />
+						<f:convertNumber type="currency" maxFractionDigits="2" minFractionDigits="2" />
+					</h:outputText>
+				</div>
+				<div class="ui-g-12 ui-md-8 div-details">
+					<h:outputText styleClass="label" value="Product MSRP:" />
+					<h:outputText value="#{customerController.selectedProduct.msrp}">
+						<f:convertNumber type="currency" maxFractionDigits="2" minFractionDigits="2" />
+					</h:outputText>
+				</div>
+				<div class="ui-g-12 ui-md-8 div-details">
+					<p:fieldset legend="Description" styleClass="wh100">
+						<h:outputText value="#{customerController.selectedProduct.productDescription}" />
+					</p:fieldset>
+				</div>
+			</div>
+		</h:panelGroup>
+	</p:dialog>
+
+</ui:composition>

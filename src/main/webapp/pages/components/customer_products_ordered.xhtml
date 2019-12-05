@@ -1,0 +1,116 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:p="http://primefaces.org/ui">
+
+	<!-- Dialog Customer Products Ordered -->
+	<p:dialog fitViewport="true" styleClass="dialog-orders" header="" widgetVar="dlgProducts" modal="true" height="100" closeOnEscape="true"
+		closable="true" dynamic="true" resizable="true" responsive="true">
+		<h:form id="form-products">
+			<h3>
+				<h:outputText
+					value="Products Ordered by #{customerController.selectedCustomer.customerName} (#{customerController.selectedCustomer.products.size()})" />
+			</h3>
+			<hr />
+			<div class="dialog-content">
+				<p:dataList id="list_order" styleClass="no-border" value="#{customerController.selectedCustomer.products}" var="product" type="unordered"
+					itemType="none" emptyMessage="No products found" paginatorAlwaysVisible="false" paginator="true" rows="10">
+					<p:accordionPanel id="accordion-products" styleClass="order-panel" activeIndex="-1">
+						<p:tab>
+							<f:facet name="title">
+								<div class="ui-g ui-fluid">
+									<div class="ui-g-12 ui-md-2">
+										<h:outputText value="Product ##{product.productCode} " />
+									</div>
+									<div class="ui-g-12 ui-md-6">
+										<h:outputText value="#{product.productName}">
+											<f:convertDateTime pattern="MMM dd, yyyy" />
+										</h:outputText>
+									</div>
+								</div>
+							</f:facet>
+							<p:panelGrid id="pnl_order" columns="2" cellpadding="5" columnClasses="ui-grid-col-6,ui-grid-col-8" layout="grid"
+								styleClass="ui-panelgrid-blank">
+								<p:panelGrid columns="1" cellpadding="5" columnClasses="ui-grid-col-12" layout="grid" styleClass="ui-panelgrid-blank">
+									<h:panelGroup>
+										<h:outputText value="Product Line: " styleClass="label" />
+										<h:outputText value="#{product.productLine}" />
+									</h:panelGroup>
+									<h:panelGroup>
+										<h:outputText value="Product Scale: " styleClass="label" />
+										<h:outputText value="#{product.productScale}" />
+									</h:panelGroup>
+									<h:panelGroup>
+										<h:outputText value="Product Vendor: " styleClass="label" />
+										<h:outputText value="#{product.productVendor}" />
+									</h:panelGroup>
+									<h:panelGroup>
+										<h:outputText styleClass="label" value="Product Quantity in Stock:" />
+										<h:outputText value="#{product.quantityInStock}" />
+									</h:panelGroup>
+									<h:panelGroup>
+										<h:outputText styleClass="label" value="Product Buy Price:" />
+										<h:outputText value="#{product.buyPrice}">
+											<f:convertNumber type="currency" maxFractionDigits="2" minFractionDigits="2" />
+											<f:convertNumber type="currency" maxFractionDigits="2" minFractionDigits="2" />
+										</h:outputText>
+									</h:panelGroup>
+									<h:panelGroup>
+										<h:outputText styleClass="label" value="Product MSRP:" />
+										<h:outputText value="#{product.msrp}">
+											<f:convertNumber type="currency" maxFractionDigits="2" minFractionDigits="2" />
+										</h:outputText>
+									</h:panelGroup>
+								</p:panelGrid>
+								<p:fieldset legend="Description" styleClass="wh100">
+									<h:outputText value="#{product.productDescription}" />
+								</p:fieldset>
+							</p:panelGrid>
+							<div class="ui-g ui-fluid">
+								<div class="ui-g-12 ui-md-12">
+									<p:dataTable resizableColumns="true" value="#{product.orderdetails}" var="detail" paginatorAlwaysVisible="false" emptyMessage="N/A"
+										reflow="true">
+										<p:column headerText="Order #" sortBy="#{detail.order.orderNumber}">
+											<p:commandLink title="Open Order Details" styleClass="link-product" actionListener="#{customerController.loadOrder(detail.order)}"
+												oncomplete="PF('dlgOrderDetail').show();" update="form-order-detail">
+												<i class="fa fa-search" aria-hidden="true"></i>
+												<h:outputText value="#{detail.order.orderNumber}" />
+											</p:commandLink>
+
+										</p:column>
+										<p:column headerText="Order Line" width="5%" styleClass="center">
+											<h:outputText value="#{detail.orderLineNumber}" />
+										</p:column>
+										<p:column headerText="Order Date" styleClass="center" sortBy="#{detail.order.orderDate}">
+											<h:outputText value="#{detail.order.orderDate}">
+												<f:convertDateTime pattern="MMM dd, yyyy" />
+											</h:outputText>
+										</p:column>
+										<p:column headerText="Price per Unit">
+											<h:outputText value="#{detail.priceEach}">
+												<f:convertNumber type="currency" maxFractionDigits="2" minFractionDigits="2" />
+											</h:outputText>
+										</p:column>
+										<p:column headerText="Qty">
+											<h:outputText value="#{detail.quantityOrdered}" />
+										</p:column>
+										<p:column headerText="Total">
+											<h:outputText value="#{detail.priceEach * detail.quantityOrdered}">
+												<f:convertNumber type="currency" maxFractionDigits="2" minFractionDigits="2" />
+											</h:outputText>
+										</p:column>
+										<p:columnGroup type="footer">
+											<p:row>
+												<p:column colspan="4" footerText="Total:" styleClass="right bold" />
+												<p:column footerText="#{product.totalQty}" styleClass="left bold" />
+												<p:column footerText="#{product.total}" styleClass="left bold" />
+											</p:row>
+										</p:columnGroup>
+									</p:dataTable>
+								</div>
+							</div>
+						</p:tab>
+					</p:accordionPanel>
+				</p:dataList>
+			</div>
+		</h:form>
+	</p:dialog>
+</ui:composition>

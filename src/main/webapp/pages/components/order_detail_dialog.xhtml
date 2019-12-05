@@ -1,0 +1,95 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:p="http://primefaces.org/ui">
+
+	<!-- Dialog Order Detail -->
+	<p:dialog fitViewport="true" styleClass="dialog-order-detail" header="" widgetVar="dlgOrderDetail" modal="true" height="100" closeOnEscape="true"
+		closable="true" dynamic="true" resizable="true" responsive="true">
+		<h:form id="form-order-detail" style="margin-left:8px;">
+			<h3>
+				<h:outputText value="Order ##{customerController.selectedOrder.orderNumber} Details" />
+			</h3>
+			<hr />
+			<div class="dialog-content">
+				<p:accordionPanel id="accordion-order" styleClass="order-panel">
+					<p:tab>
+						<f:facet name="title">
+							<div class="ui-g ui-fluid">
+								<div class="ui-g-12 ui-md-2">
+									<h:outputText value="Order ##{customerController.selectedOrder.orderNumber} " />
+								</div>
+								<div class="ui-g-12 ui-md-2">
+									<h:outputText value="Placed: " />
+									<h:outputText value="#{customerController.selectedOrder.orderDate}">
+										<f:convertDateTime pattern="MMM dd, yyyy" />
+									</h:outputText>
+								</div>
+							</div>
+						</f:facet>
+						<p:panelGrid id="pnl_order" columns="2" cellpadding="5" columnClasses="ui-grid-col-4,ui-grid-col-8" layout="grid"
+							styleClass="ui-panelgrid-blank">
+							<p:panelGrid columns="1" cellpadding="5" columnClasses="ui-grid-col-12" layout="grid" styleClass="ui-panelgrid-blank">
+								<h:panelGroup>
+									<h:outputText value="Status: " styleClass="label" />
+									<h:outputText value="#{customerController.selectedOrder.status}" />
+								</h:panelGroup>
+								<h:panelGroup>
+									<h:outputText value="Required Date: " styleClass="label" />
+									<h:outputText value="#{customerController.selectedOrder.requiredDate}">
+										<f:convertDateTime pattern="MMM dd, yyyy" />
+									</h:outputText>
+								</h:panelGroup>
+								<h:panelGroup>
+									<h:outputText value="Shipped Date" styleClass="label" />
+									<h:outputText value="#{customerController.selectedOrder.shippedDate}">
+										<f:convertDateTime pattern="MMM dd, yyyy" />
+									</h:outputText>
+								</h:panelGroup>
+							</p:panelGrid>
+							<p:fieldset legend="Comments" styleClass="wh100">
+								<h:outputText value="#{customerController.selectedOrder.formattedComments}" />
+							</p:fieldset>
+						</p:panelGrid>
+						<div class="ui-g ui-fluid">
+							<div class="ui-g-12 ui-md-12">
+								<p:dataTable resizableColumns="true" value="#{customerController.selectedOrder.orderdetails}" var="detail" paginatorAlwaysVisible="false" emptyMessage="N/A"
+									reflow="true">
+									<p:column headerText="#" width="5%" styleClass="center">
+										<h:outputText value="#{detail.orderLineNumber}" />
+									</p:column>
+									<p:column headerText="Product" width="50%">
+										<p:commandLink title="Open Product Details" styleClass="link-product" actionListener="#{customerController.loadProduct(detail.product)}"
+											oncomplete="PF('dlgProduct').show();" update="pnl_product">
+											<i class="fa fa-search" aria-hidden="true"></i>
+											<h:outputText value="#{detail.product.productName}" />
+										</p:commandLink>
+
+									</p:column>
+									<p:column headerText="Price per Unit">
+										<h:outputText value="#{detail.priceEach}">
+											<f:convertNumber type="currency" maxFractionDigits="2" minFractionDigits="2" />
+										</h:outputText>
+									</p:column>
+									<p:column headerText="Qty">
+										<h:outputText value="#{detail.quantityOrdered}" />
+									</p:column>
+									<p:column headerText="Total">
+										<h:outputText value="#{detail.priceEach * detail.quantityOrdered}">
+											<f:convertNumber type="currency" maxFractionDigits="2" minFractionDigits="2" />
+										</h:outputText>
+									</p:column>
+									<p:columnGroup type="footer">
+										<p:row>
+											<p:column colspan="3" footerText="Total:" styleClass="right bold" />
+											<p:column footerText="#{customerController.selectedOrder.totalQty}" styleClass="left bold" />
+											<p:column footerText="#{customerController.selectedOrder.total}" styleClass="left bold" />
+										</p:row>
+									</p:columnGroup>
+								</p:dataTable>
+							</div>
+						</div>
+					</p:tab>
+				</p:accordionPanel>
+			</div>
+		</h:form>
+	</p:dialog>
+</ui:composition>

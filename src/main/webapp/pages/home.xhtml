@@ -1,0 +1,80 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:p="http://primefaces.org/ui" template="/WEB-INF/template.xhtml">
+
+	<ui:define name="content">
+
+		<f:metadata>
+			<f:viewAction action="#{customerController.initList()}" />
+		</f:metadata>
+
+		<h:form id="form-customers">
+			<p:panel>
+				<h1>Customer list</h1>
+				<hr/>
+				<div class="ui-g ui-fluid">
+					<div class="ui-g-12 ui-md-4">
+						<div class="ui-inputgroup">
+							<p:selectOneMenu style="background-color:yellow" styleClass="elem-sm" value="#{customerController.filterField}">
+								<f:selectItem itemLabel="All" itemValue="all" />
+								<f:selectItem itemLabel="Number" itemValue="customerNumber" />
+								<f:selectItem itemLabel="Name" itemValue="customerName" />
+								<f:selectItem itemLabel="Country" itemValue="country" />
+								<f:selectItem itemLabel="State" itemValue="state" />
+								<f:selectItem itemLabel="City" itemValue="city" />
+								<f:selectItem itemLabel="Postal Code" itemValue="postalCode" />
+							</p:selectOneMenu>
+							<p:inputText placeholder="Keyword Contais" styleClass="mleft10" value="#{customerController.keyword}"/>
+							<p:commandButton value="Filter" actionListener="#{customerController.filterList()}" update="tb_customers"/>
+						</div>
+					</div>
+				</div>
+				<p:dataTable id="tb_customers" resizableColumns="true" value="#{customerController.customers}" var="customer" paginatorAlwaysVisible="false" filterDelay="800"
+					paginator="true" rows="10" emptyMessage="No record found" reflow="true"
+					paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown} {CurrentPageReport} "
+					rowsPerPageTemplate="5,10,20,50" currentPageReportTemplate="{totalRecords} Records found">
+					<p:column headerText="Number" sortBy="#{customer.customerNumber}" filterBy="#{customer.customerNumber}" filterMatchMode="contains">
+						<h:outputText value="#{customer.customerNumber}" />
+					</p:column>
+					<p:column headerText="Name" sortBy="#{customer.customerName}">
+						<h:outputText value="#{customer.customerName}" />
+					</p:column>
+					<p:column headerText="Country">
+						<h:outputText value="#{customer.country}" />
+					</p:column>
+					<p:column headerText="State">
+						<h:outputText value="#{customer.state}" />
+					</p:column>
+					<p:column headerText="City">
+						<h:outputText value="#{customer.city}" />
+					</p:column>
+					<p:column headerText="Postal Code">
+						<h:outputText value="#{customer.postalCode}" />
+					</p:column>
+					<p:column headerText="Credit Limit">
+						<h:outputText value="#{customer.creditLimit}">
+							<f:convertNumber type="currency" maxFractionDigits="2" minFractionDigits="2" />
+						</h:outputText>
+					</p:column>
+					<p:column headerText="Controls">
+						<p:commandButton styleClass="btn-icon" title="Customer Details" icon="fa fa-address-card-o"
+							actionListener="#{customerController.loadCustomer(customer)}" onclick="PF('dlgDetails').show();" update="form-details" />
+						<p:commandButton styleClass="btn-icon" title="Show Orders" icon="fa fa-shopping-cart" actionListener="#{customerController.loadCustomer(customer)}"
+							oncomplete="PF('dlgOrder').show();" update="form-orders" />
+						<p:commandButton styleClass="btn-icon" title="Show Products Ordered by Customer" icon="fa fa-product-hunt" actionListener="#{customerController.loadCustomerProcuts(customer)}"
+							oncomplete="PF('dlgProducts').show();" update="form-products" />
+					</p:column>
+
+				</p:dataTable>
+			</p:panel>
+		</h:form>
+
+		<ui:include src="/pages/components/customer_orders_dialog.xhtml" />
+		<ui:include src="/pages/components/customer_detail_dialog.xhtml" />
+		<ui:include src="/pages/components/product_detail_dialog.xhtml" />
+
+		<ui:include src="/pages/components/customer_products_ordered.xhtml" />
+		<ui:include src="/pages/components/order_detail_dialog.xhtml" />
+		
+	</ui:define>
+
+</ui:composition>

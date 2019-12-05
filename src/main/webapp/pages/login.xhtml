@@ -1,0 +1,43 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<h:outputStylesheet name="custom.css" library="css" />
+	<f:facet name="first">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+		<meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+	</f:facet>
+
+</h:head>
+
+<h:body>
+	<div class="header">
+		<h:graphicImage value="/resources/img/people.png" />
+		<h:outputText styleClass="header-label" value="JSF LAB - by guilhermefacanha" />
+	</div>
+	<h:form id="form-login" style="margin-top:60px">
+		<div class="login-div ui-fluid">
+			<p:messages id="messages" closable="true">
+				<p:autoUpdate />
+			</p:messages>
+			<p:panel header="Login">
+				<p:panelGrid columns="2" cellpadding="5" columnClasses="ui-grid-col-4,ui-grid-col-8" layout="grid" styleClass="ui-panelgrid-blank">
+					<h:outputLabel for="username" value="Username:" />
+					<p:inputText id="username" value="#{userAuthenticationController.authenticatedUser.username}" placeholder="Enter your username" required="true"
+						label="username" />
+
+					<h:outputLabel for="password" value="Password:" />
+					<p:password id="password" value="#{userAuthenticationController.authenticatedUser.password}" placeholder="********" required="true"
+						label="password" />
+
+					<f:facet name="footer">
+						<p:commandButton value="Enter" action="#{userAuthenticationController.authenticate()}" />
+					</f:facet>
+				</p:panelGrid>
+			</p:panel>
+		</div>
+	</h:form>
+</h:body>
+</html>

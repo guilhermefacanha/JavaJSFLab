@@ -1,0 +1,69 @@
+
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:p="http://primefaces.org/ui" lang="en">
+
+<h:head>
+	<f:facet name="first">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+	</f:facet>
+	<title><ui:insert name="title">JSF LAB</ui:insert></title>
+	<link rel="shortcut icon" type="image/x-icon" href="#{resource['img/favicon.ico']}" />
+	<link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"
+		integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous" />
+	<ui:insert name="head" />
+	<script type="text/javascript">
+	    //<![CDATA[
+	function start() {
+	    PF('statusdlg').show();
+	}
+	 
+	function stop() {
+	    PF('statusdlg').hide();
+	}
+	    //]]>
+	</script>
+</h:head>
+
+<h:body>
+
+	<p:ajaxStatus onstart="PF('statusdlg').show();" oncomplete="PF('statusdlg').hide();"
+		style="width:32px;height:32px;position:fixed;right:7px;bottom:7px">
+	</p:ajaxStatus>
+	<p:dialog modal="true" widgetVar="statusdlg" closable="false" resizable="false" draggable="false" showHeader="false">
+		<h:graphicImage value="#{resource['img/ajax-loader.gif']}" />
+	</p:dialog>
+
+	<div class="header">
+		<h:graphicImage value="/resources/img/people.png" />
+		<h:outputText styleClass="header-label" value="JSF LAB - by guilhermefacanha" />
+	</div>
+	<div class="layout-content main" id="content-principal">
+		<p:messages id="messages" closable="true">
+			<p:autoUpdate />
+		</p:messages>
+		<h:form>
+			<p:toolbar style="margin:20px 0px">
+				<f:facet name="left">
+					<p:button outcome="/pages/home?faces-redirect=true" type="button" value="Customers" icon="ui-icon-document" />
+					<p:button outcome="/pages/home_ajax?faces-redirect=true" type="button" value="Customers Ajax" icon="ui-icon-document" />
+				</f:facet>
+
+				<f:facet name="right">
+					<h:outputText styleClass="mright10" value="Welcome, #{userAuthenticationController.authenticatedUser.username}"></h:outputText>
+					<p:commandButton value="Logout" action="#{userAuthenticationController.logout()}" icon="ui-icon-arrowreturnthick-1-e" />
+				</f:facet>
+			</p:toolbar>
+		</h:form>
+		<div class="ui-fluid">
+			<ui:insert name="content" />
+		</div>
+	</div>
+
+	<h:outputStylesheet name="custom.css" library="css" />
+</h:body>
+
+</html>
