@@ -20,7 +20,7 @@
 		<hibernate.version>5.0.9.Final-redhat-1</hibernate.version>
 		<hibernate.validator.version>5.2.4.Final-redhat-1</hibernate.validator.version>
 		<hibernate.jpa.version>1.0.2.Final</hibernate.jpa.version>
-		<mysql.version>8.0.18</mysql.version>
+		<mysql.version>8.0.28.redhat-00001</mysql.version>
 		<lombok.version>1.16.10</lombok.version>
 	</properties>
 
